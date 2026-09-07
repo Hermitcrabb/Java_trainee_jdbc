@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Employee CRUD</title>
+</head>
+<body>
+
+<h2>Employee Lookup</h2>
+
+<form action="/find" method="post">
+    Employee ID: <input type="number" name="id" required>
+    <button type="submit">Find</button>
+</form>
+
+<form action="/all" method="get">
+    <button type="submit">Find All</button>
+</form>
+
+<p th:if="${message}" th:text="${message}"></p>
+
+<div th:if="${employee != null}">
+    <h3>Employee</h3>
+    <p th:text="'ID: ' + ${employee.employeeId}"></p>
+    <p th:text="'Name: ' + ${employee.employeeName}"></p>
+    <p th:text="'Address: ' + ${employee.employeeAddress}"></p>
+    <p th:text="'Department: ' + ${employee.employeeDepartment}"></p>
+
+    <form action="/update" method="post">
+        <input type="hidden" name="id" th:value="${employee.employeeId}">
+        New Department: <input type="text" name="department" required>
+        <button type="submit">Update</button>
+    </form>
+
+    <form action="/delete" method="post">
+        <input type="hidden" name="id" th:value="${employee.employeeId}">
+        <button type="submit">Delete</button>
+    </form>
+</div>
+
+<div th:if="${employees != null}">
+    <h3>All Employees</h3>
+    <table border="1">
+        <tr>
+            <th>ID</th><th>Name</th><th>Address</th><th>Department</th>
+        </tr>
+        <tr th:each="e : ${employees}">
+            <td th:text="${e.employeeId}"></td>
+            <td th:text="${e.employeeName}"></td>
+            <td th:text="${e.employeeAddress}"></td>
+            <td th:text="${e.employeeDepartment}"></td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>
